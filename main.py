@@ -1,28 +1,22 @@
+# Keyword Method with iterrows()
+# {new_key:new_value for (index, row) in df.iterrows()}
 
 import pandas
-with open("nato_phonetic_alphabet.csv") as file:
-    contents = pandas.read_csv("nato_phonetic_alphabet.csv")
 
-contents_letter = contents["letter"].to_list()
-contents_code = contents["code"].to_list()
+data = pandas.read_csv("nato_phonetic_alphabet.csv")
+#TODO 1. Create a dictionary in this format:
+phonetic_dict = {row.letter: row.code for (index, row) in data.iterrows()}
+print(phonetic_dict)
 
+#TODO 2. Create a list of the phonetic code words from a word that the user inputs.
 
-kaka = 0
-newnato = {}
-for i in contents_letter:
-    newnato[i] = contents_code[kaka]
-    kaka += 1
-
-#print(newnato)
-last = []
-inp = input("Enter a word: ").upper()
-for character in inp:
-    last.append(newnato[character])
-print(last)
-
-
-#Loop through rows of a data frame
-# for (index, row) in contents.iterrows():
-#     print(row.code)
-# last = {row.letter:row.code for (index, row) in contents.iterrows()}
-# print(last)
+def kaka():
+    try:
+        word = input("Enter a word: ").upper()
+        output_list = [phonetic_dict[letter] for letter in word]
+    except KeyError:
+        print("Sorry, only letters in the alphabet please")
+        kaka()
+    else:
+        print(output_list)
+kaka()
